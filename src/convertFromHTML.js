@@ -300,6 +300,16 @@ function genFragment(
   let nextBlockType = 'unstyled';
 
   // Base Case
+  if (nodeName === 'span' && (node.textContent === SPACE || node.textContent === NBSP || node.textContent === '\s')) {
+    // When tag <span> </span> with only whitespace
+    let text = node.textContent
+    return {
+        text,
+        inlines: Array(text.length).fill(inlineStyle),
+        entities: [],
+        blocks: [],
+    }
+  }
   if (nodeName === '#text') {
     let text = node.textContent;
     if (text.trim() === '' && inBlock === null) {
